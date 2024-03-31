@@ -36,13 +36,13 @@ include ('includes/topbar.php');
                       
                 </div>
 
-                <h3 class="profile-username text-center"><?php $_SESSION['fb_id']; ?></h3>
+                <h3 class="profile-username text-center"><?php echo $_SESSION['fb_name']; ?></h3>
 
                 <p class="text-muted text-center">Software Engineer</p>
 
                 <ul class="list-group list-group-unbordered mb-3">
                   <li class="list-group-item">
-                    <b>Name:</b> <a class="float-right"><?php echo $_SESSION['fb_email']; ?></a>
+                    <b>Name:</b> <a class="float-right"><?php echo $_SESSION['fb_name']; ?></a>
                   </li>
                   <li class="list-group-item">
                     <b>Email:</b> <a class="float-right"><?php echo $_SESSION['fb_email']; ?></a>
@@ -84,8 +84,7 @@ include ('includes/topbar.php');
                 <p class="text-muted">
                   <span class="tag tag-danger">UI Design</span>
                   <span class="tag tag-success">Coding</span>
-                  <span class="tag tag-info">Javascript</span>
-                  <span class="tag tag-warning">PHP</span>
+                  <span class="tag tag-info">Javascript</span><span class="tag tag-warning">PHP</span>
                   <span class="tag tag-primary">Node.js</span>
                 </p>
 
@@ -123,7 +122,11 @@ include ('includes/topbar.php');
             <!-- /.user-block -->
             <p>FB ID: <?php echo $_SESSION['fb_id'] ; ?></p>
             <p>FB EMAIL: <?php echo $_SESSION['fb_email']; ?></p>
-            <p>FB NAME: <?php  echo $_SESSION['fb_name']; ?></p>      
+            <p>FB NAME: <?php  echo $_SESSION['fb_name']; ?></p>    
+            <p>FB PHONE: <?php echo $_SESSION['phone']; ?></p>
+            <p>FB GENDER: <?php echo $_SESSION['gender']; ?></p>
+            <p>FB ADDRESS: <?php  echo  $_SESSION['address']; ?></p>    
+            <a href='fb-user-edit.php?fb_id=<?php echo $_SESSION['fb_id']; ?>' class='btn btn-success btn-sm'>Edit</a>
             <a href="logout.php" class="d-block">Logout</a>                
                 </div>
               </div>
