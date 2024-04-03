@@ -1,9 +1,9 @@
 <?php
 session_start();
 include('includes/header.php');
-include('includes/topbar.php');
+
 include('includes/db-conn.php');
-require_once 'config.php';
+
 
 // Check if the form is submitted for profile update
 if (isset($_POST['update_profile'])) {
@@ -33,16 +33,16 @@ if (isset($_POST['update_profile'])) {
     } else {
         // Check if any rows were updated
         if ($stmt->affected_rows == 0) {
-            // Print out the current fb_id session variable and the submitted form data
-            echo "<div class='alert alert-warning'>No changes detected:<pre>";
-            print_r($_SESSION);
-            print_r($_POST);
-            echo "</pre></div>";
-        } else {
-            echo "<div class='alert alert-success'>Profile updated successfully.</div>";
-            // Redirect to a different page after successful update
-            header("Location: profile.php");
-            exit();
+            // Update session variables
+        $_SESSION['fb_email'] = $email;
+        $_SESSION['fb_name'] = "{$firstname} {$lastname}";
+        $_SESSION['phone'] = $phone;
+        $_SESSION['gender'] = $gender;
+        $_SESSION['address'] = $address;
+
+        // Redirect to a different page after successful update
+        header("Location: fb-user-edit.php");
+        exit();
         }
     }
     

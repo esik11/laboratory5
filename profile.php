@@ -120,14 +120,14 @@ include ('includes/topbar.php');
                 <span class="description"><?php echo $_SESSION['fb_name']; ?></span>
             </div>
             <!-- /.user-block -->
-            <p>FB ID: <?php echo $_SESSION['fb_id'] ; ?></p>
-            <p>FB EMAIL: <?php echo $_SESSION['fb_email']; ?></p>
-            <p>FB NAME: <?php  echo $_SESSION['fb_name']; ?></p>    
-            <p>FB PHONE: <?php echo $_SESSION['phone']; ?></p>
-            <p>FB GENDER: <?php echo $_SESSION['gender']; ?></p>
-            <p>FB ADDRESS: <?php  echo  $_SESSION['address']; ?></p>    
-            <a href='fb-user-edit.php?fb_id=<?php echo $_SESSION['fb_id']; ?>' class='btn btn-success btn-sm'>Edit</a>
-            <a href="logout.php" class="d-block">Logout</a>                
+                  <p>FB ID: <?php echo $_SESSION['fb_id'] ; ?></p>
+      <p>FB EMAIL: <?php echo $_SESSION['fb_email']; ?></p>
+      <p>FB NAME: <?php  echo $_SESSION['fb_name']; ?></p>    
+      <p>FB PHONE: <?php echo $_SESSION['phone']; ?></p>
+      <p>FB GENDER: <?php echo $_SESSION['gender']; ?></p>
+      <p>FB ADDRESS: <?php  echo  $_SESSION['address']; ?></p>    
+      <a href='fb-user-edit.php?fb_id=<?php echo $_SESSION['fb_id']; ?>' class='btn btn-success btn-sm'>Edit</a>
+      <a href="logout.php" class="d-block">Logout</a>
                 </div>
               </div>
               </div><!-- /.card-body -->
