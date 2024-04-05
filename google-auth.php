@@ -5,8 +5,8 @@ require_once 'vendor/autoload.php';
 session_start();
 
 // init configuration
-$clientID = '';
-$clientSecret = '';
+$clientID = '261596654543-bsod7hsll25hbvg0jjmjqbil1ulon0bl.apps.googleusercontent.com';
+$clientSecret = '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';
 $redirectUri = 'http://localhost/laboratory5.php/admindashboard/labact.php/admin/index.php';
 
 // create Client Request to access Google API
