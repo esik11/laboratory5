@@ -10,7 +10,7 @@ session_start();
 $client = new Google_Client();
 $client->setClientId('');
 $client->setClientSecret('');
-$client->setRedirectUri('http://localhost/laboratory5.php/laboratory5.php/laboratory5/login-google.php');
+$client->setRedirectUri('');
 $client->addScope('profile');
 $client->addScope('email');
 
