@@ -8,8 +8,8 @@ session_start();
 
 // Initialize Google Client
 $client = new Google_Client();
-$client->setClientId('261596654543-g79jvsumotns0c0frjb14cjb3s29nllu.apps.googleusercontent.com');
-$client->setClientSecret('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');
+$client->setClientId('');
+$client->setClientSecret('');
 $client->setRedirectUri('http://localhost/laboratory5.php/laboratory5.php/laboratory5/login-google.php');
 $client->addScope('profile');
 $client->addScope('email');
