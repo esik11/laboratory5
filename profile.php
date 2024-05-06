@@ -1,9 +1,43 @@
 <?php
+// Start session to manage user data
 session_start();
-include ('includes/header.php');
-include ('includes/db-conn.php');
-include ('includes/topbar.php');
+
+// Include header, topbar, and sidebar files for UI
+include('includes/header.php');
+include('includes/topbar.php');
+include('includes/sidebar.php');
+
+// Include database connection script
+include('includes/db-conn.php');
+
+// Check if user is logged in
+if (isset($_SESSION['id'])) {
+    // Retrieve user ID from session
+    $user_id = $_SESSION['id'];
+
+    // Query to fetch user data based on user ID
+    $query = "SELECT email, firstname , last_name, full_name, gender, phone, address FROM profile WHERE id = $user_id";
+
+    // Execute query
+    $result = mysqli_query($conn, $query);
+
+    // Check if query is successful and user data is found
+    if ($result && mysqli_num_rows($result) > 0) {
+        // Fetch user details
+        $user = mysqli_fetch_assoc($result);
+    } else {
+        // Handle error if no user found with the given user ID
+        // For instance, redirect the user to a login page or display an error message
+    }
+} else {
+    // Handle the case where the user is not logged in
+    // For instance, redirect the user to a login page
+    header("Location: login.php");
+    exit();
+}
 ?>
+
+
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -32,20 +66,21 @@ include ('includes/topbar.php');
             <div class="card card-primary card-outline">
               <div class="card-body box-profile">
                 <div class="text-center">
-                <img src="<?= $_SESSION['fb_pic'] ?>" alt="" width="90px" height="90px">
-                      
+                  <img class="profile-user-img img-fluid img-circle"
+                       src=""
+                       alt="User profile picture">
                 </div>
 
-                <h3 class="profile-username text-center"><?php echo $_SESSION['fb_name']; ?></h3>
+                <h3 class="profile-username text-center"><?php echo $user['last_name']; ?></h3>
 
                 <p class="text-muted text-center">Software Engineer</p>
 
                 <ul class="list-group list-group-unbordered mb-3">
                   <li class="list-group-item">
-                    <b>Name:</b> <a class="float-right"><?php echo $_SESSION['fb_name']; ?></a>
+                    <b>Name:</b> <a class="float-right"><?php echo $user['firstname']; ?></a>
                   </li>
                   <li class="list-group-item">
-                    <b>Email:</b> <a class="float-right"><?php echo $_SESSION['fb_email']; ?></a>
+                    <b>Email:</b> <a class="float-right"><?php echo $user['email']; ?></a>
                   </li>
                   <li class="list-group-item">
                     <b>Friends</b> <a class="float-right">13,287</a>
@@ -84,7 +119,8 @@ include ('includes/topbar.php');
                 <p class="text-muted">
                   <span class="tag tag-danger">UI Design</span>
                   <span class="tag tag-success">Coding</span>
-                  <span class="tag tag-info">Javascript</span><span class="tag tag-warning">PHP</span>
+                  <span class="tag tag-info">Javascript</span>
+                  <span class="tag tag-warning">PHP</span>
                   <span class="tag tag-primary">Node.js</span>
                 </p>
 
@@ -113,21 +149,21 @@ include ('includes/topbar.php');
               <div class="tab-content">
                 <div class="active tab-pane" id="activity">
                   <div class="post">
-                  <div class="user-block">
-                <span class="username">
-                    <a href="#">Full Name: </a>
-                </span>
-                <span class="description"><?php echo $_SESSION['fb_name']; ?></span>
-            </div>
-            <!-- /.user-block -->
-                  <p>FB ID: <?php echo $_SESSION['fb_id'] ; ?></p>
-      <p>FB EMAIL: <?php echo $_SESSION['fb_email']; ?></p>
-      <p>FB NAME: <?php  echo $_SESSION['fb_name']; ?></p>    
-      <p>FB PHONE: <?php echo $_SESSION['phone']; ?></p>
-      <p>FB GENDER: <?php echo $_SESSION['gender']; ?></p>
-      <p>FB ADDRESS: <?php  echo  $_SESSION['address']; ?></p>    
-      <a href='fb-user-edit.php?fb_id=<?php echo $_SESSION['fb_id']; ?>' class='btn btn-success btn-sm'>Edit</a>
-      <a href="logout.php" class="d-block">Logout</a>
+                    <div class="user-block">
+                      <span class="username">
+                        <a href="#">Full Name: </a>
+                      </span>
+                      <span class="description"><?php echo $user['full_name']; ?></span>
+                    </div>
+                    <!-- /.user-block -->
+                    <p>Email: <?php echo $user['email']; ?></p>
+                    <p>First Name: <?php echo $user['firstname']; ?></p>
+                    <p>Last Name: <?php echo $user['last_name']; ?></p>
+                    <p>Address: <?php echo $user['address']; ?></p>
+                    <p>Phone Number: <?php echo $user['phone']; ?></p>      
+                    <p>Gender: <?php echo $user['gender']; ?></p>        
+                    <a href='user-edit.php?id=<?php echo $user_id; ?>' class='btn btn-success btn-sm'>EDIT PROFILE</a>
+                    <a href="logout.php" class="d-block">Logout</a>                
                 </div>
               </div>
               </div><!-- /.card-body -->
