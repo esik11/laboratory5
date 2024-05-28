@@ -16,7 +16,7 @@ if (isset($_SESSION['id'])) {
     $user_id = $_SESSION['id'];
 
     // Query to fetch user data based on user ID
-    $query = "SELECT email, firstname , last_name, full_name, gender, phone, address FROM profile WHERE id = $user_id";
+    $query = "SELECT email, first_name , last_name, profile_pic, full_name, gender, phone, address FROM profile WHERE id = $user_id";
 
     // Execute query
     $result = mysqli_query($conn, $query);
@@ -67,7 +67,7 @@ if (isset($_SESSION['id'])) {
               <div class="card-body box-profile">
                 <div class="text-center">
                   <img class="profile-user-img img-fluid img-circle"
-                       src=""
+                       src="<?php echo $user['profile_pic']; ?>"
                        alt="User profile picture">
                 </div>
 
@@ -77,7 +77,7 @@ if (isset($_SESSION['id'])) {
 
                 <ul class="list-group list-group-unbordered mb-3">
                   <li class="list-group-item">
-                    <b>Name:</b> <a class="float-right"><?php echo $user['firstname']; ?></a>
+                    <b>Name:</b> <a class="float-right"><?php echo $user['first_name']; ?></a>
                   </li>
                   <li class="list-group-item">
                     <b>Email:</b> <a class="float-right"><?php echo $user['email']; ?></a>
@@ -157,13 +157,14 @@ if (isset($_SESSION['id'])) {
                     </div>
                     <!-- /.user-block -->
                     <p>Email: <?php echo $user['email']; ?></p>
-                    <p>First Name: <?php echo $user['firstname']; ?></p>
+                    <p>First Name: <?php echo $user['first_name']; ?></p>
                     <p>Last Name: <?php echo $user['last_name']; ?></p>
                     <p>Address: <?php echo $user['address']; ?></p>
                     <p>Phone Number: <?php echo $user['phone']; ?></p>      
                     <p>Gender: <?php echo $user['gender']; ?></p>        
                     <a href='user-edit.php?id=<?php echo $user_id; ?>' class='btn btn-success btn-sm'>EDIT PROFILE</a>
-                    <a href="logout.php" class="d-block">Logout</a>                
+                    <a href="logout.php" class="d-block">Logout</a>     
+                    <a href="landingpage.php" class="d-block">Back</a>       
                 </div>
               </div>
               </div><!-- /.card-body -->
