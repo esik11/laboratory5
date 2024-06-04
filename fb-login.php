@@ -58,16 +58,9 @@ if (isset($accessToken)) {
         $fbid = $userNode->getId();
         $fbfullname = $userNode->getName();
         $fbemail = $userNode->getEmail();
-        $fbgender = isset($userNode['gender']) ? $userNode['gender'] : 'Unknown'; // Check if gender exists
-        $fbaddress = isset($userNode['address']) ? $userNode['address'] : 'Unknown'; // Check if address exists
-
-        // Set default values for phone
-        $fbphone = 'Unknown';
-
+ 
         // You can also attempt to fetch phone from additional fields if available
-        if ($userNode->getField('phone')) {
-            $fbphone = $userNode->getField('phone');
-        }
+       
 
         // Generate the Facebook profile picture URL
         $fbpic = "<img src='https://graph.facebook.com/$fbid/picture?redirect=true'>";
