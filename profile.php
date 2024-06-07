@@ -32,9 +32,16 @@ if (isset($_SESSION['id'])) {
     if ($result && mysqli_num_rows($result) > 0) {
         // Fetch user details
         $user = mysqli_fetch_assoc($result);
+
+        // Set default profile picture if not available
+        if (empty($user['profile_pic'])) {
+            $user['profile_pic'] = 'uploads/default.jpg'; // Ensure this path is correct
+        }
     } else {
         // Handle error if no user found with the given user ID
         // For instance, redirect the user to a login page or display an error message
+        header("Location: login.php");
+        exit();
     }
 } else {
     // Handle the case where the user is not logged in
@@ -200,9 +207,10 @@ if (isset($_SESSION['id'])) {
     <form action="profile-update.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
                 <!-- Input fields for updating user information -->
                 <div class="mb-3">
-                    <label for="username" class="form-label">Username</label>
-                    <input type="text" id="username" name="username" class="form-control" value="<?php echo htmlspecialchars($user['username']); ?>" required>
-                </div>
+    <label for="username" class="form-label fw-bold text-primary">Username</label>
+    <input type="text" id="username" name="username" class="form-control bg-light border-primary" value="<?php echo htmlspecialchars($user['username']);?>" required readonly>
+    <span class="input-group-text bg-primary text-white"><i class="fas fa-user"></i></span>
+</div>
                 <div class="mb-3">
                     <label for="first_name" class="form-label">First Name</label>
                     <input type="text" id="first_name" name="first_name" class="form-control" value="<?php echo htmlspecialchars($user['first_name']); ?>" required pattern="[A-Za-z\s]+" title="First name should only contain letters and spaces.">
@@ -216,9 +224,10 @@ if (isset($_SESSION['id'])) {
                     <input type="text" id="last_name" name="last_name" class="form-control" value="<?php echo htmlspecialchars($user['last_name']); ?>" required pattern="[A-Za-z\s]+" title="Last name should only contain letters and spaces.">
                 </div>
                 <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" id="email" name="email" class="form-control" value="<?php echo htmlspecialchars($user['email']); ?>" required>
-                </div>
+    <label for="email" class="form-label fw-bold text-primary">Email</label>
+    <input type="email" id="email" name="email" class="form-control bg-light border-primary" value="<?php echo htmlspecialchars($user['email']);?>" required readonly>
+    <span class="input-group-text bg-primary text-white"><i class="fas fa-envelope"></i></span>
+</div>
                 <div class="mb-3">
                     <label for="gender" class="form-label">Gender</label>
                     <select id="gender" name="gender" class="form-control" required>
@@ -247,9 +256,9 @@ if (isset($_SESSION['id'])) {
                         </div>
                 <div class="form-group row">
                     <div class="offset-sm-2 col-sm-10">
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                        <a href="user-profile.php" class="btn btn-primary">BACK</a>
-                        <a href="logout.php" class="btn btn-primary">logout</a>
+                    <button type="submit" class="btn btn-primary save-changes-btn">Save Changes</button>
+<a href="user-profile.php" class="btn btn-primary back-btn">BACK</a>
+<a href="logout.php" class="btn btn-primary logout-btn">logout</a>
                     </div>
                 </div>
             </form>
@@ -317,19 +326,33 @@ if (isset($_SESSION['id'])) {
 <!-- AdminLTE for demo purposes -->
 <script src="assets/dist/js/demo.js"></script>
 <script>
-$(document).ready(function(){
-    // Hide all tab panes except the active one
-    $('.tab-pane').not('.active').hide();
+document.addEventListener('DOMContentLoaded', function() {
+  const loginSettingsTab = document.querySelector('#loginSettings');
+  const loginSettingsTabPane = document.querySelector('#loginSettings-tab-pane');
 
-    // Handle tab clicks to show the corresponding tab pane
-    $('.nav-link').on('click', function(e) {
-        e.preventDefault(); // Prevent default behavior of tab links
-        var target = $(this).attr('href');
-        $('.tab-pane').hide(); // Hide all tab panes
-        $(target).show(); // Show the clicked tab pane
-        $('.nav-link').removeClass('active'); // Remove 'active' class from all tab links
-        $(this).addClass('active'); // Add 'active' class to the clicked tab link
+  // Hide the buttons when the "Login Settings" tab is active
+  if (loginSettingsTab.classList.contains('active')) {
+    document.querySelectorAll('.save-changes-btn, .back-btn, .logout-btn').forEach(button => {
+      button.style.display = 'none';
     });
+  }
+
+  // Show the buttons when the "Login Settings" tab is not active
+  loginSettingsTab.addEventListener('click', function() {
+    if (!loginSettingsTab.classList.contains('active')) {
+      document.querySelectorAll('.save-changes-btn, .back-btn, .logout-btn').forEach(button => {
+        button.style.display = 'inline-block';
+      });
+    }
+  });
+
+  // Show the buttons when the "Profile Settings" tab is active
+  const profileSettingsTab = document.querySelector('#profileSettings');
+  profileSettingsTab.addEventListener('click', function() {
+    document.querySelectorAll('.save-changes-btn, .back-btn, .logout-btn').forEach(button => {
+      button.style.display = 'inline-block';
+    });
+  });
 });
 </script>
 <script>
